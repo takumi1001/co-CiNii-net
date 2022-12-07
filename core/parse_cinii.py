@@ -17,7 +17,7 @@ class Researcher:
     ]
 
     def __init__(self, resource: URIRef, name :str) -> None:
-        self.resouse = resource
+        self.resource = resource
         self.name = name 
 
         self.graph = Graph()
@@ -27,16 +27,16 @@ class Researcher:
         return self.name
 
     def __eq__(self, other) -> bool:
-        return self.resouse == other.resouse
+        return self.resource == other.resource
 
     def __hash__(self) -> int:
-        return hash(self.resouse)
+        return hash(self.resource)
 
     def getURI(self) -> str:
-        return str(self.resouse)
+        return str(self.resource)
 
     def parse(self) -> Graph:
-        ret = self.graph.parse(str(self.resouse))
+        ret = self.graph.parse(str(self.resource))
         self.parsed = True
         return ret
 
@@ -62,24 +62,24 @@ class Work:
     NS_DC = Namespace("http://purl.org/dc/elements/1.1/")
 
     def __init__(self, resource: URIRef, rdftype: URIRef) -> None:
-        self.resouse = resource
+        self.resource = resource
         self.type = rdftype
         self.graph = Graph()
         self.parsed = False
 
     def parse(self) -> Graph:
-        ret = self.graph.parse(str(self.resouse))
+        ret = self.graph.parse(str(self.resource))
         self.parsed = True
         return ret
 
     def __str__(self) -> str:
-        return str(self.resouse)
+        return str(self.resource)
 
-    def __eq__(self, other) -> bool:
-        return self.resouse == other.resouse
+    def __eq__(self, other: "Work") -> bool:
+        return self.resource == other.resource
 
     def __hash__(self) -> int:
-        return hash(self.resouse)
+        return hash(self.resource)
 
     def set_title(self, title: str = None) -> None:
         if title is None:
@@ -100,15 +100,20 @@ class Work:
         return self.type
 
     def getURI(self) -> str:
-        return str(self.resouse)
+        return str(self.resource)
 
     def set_authers(self) -> None:
         if not self.parsed:
             self.parse()
         self.authers: Set[Researcher] = set()
         for s, p, t in self.graph.triples((None, None, self.NS_CINII.Researcher)):
-            auther = Researcher(s, "dummy")
+            auther = Researcher(s, self.__get_auther_name(s))
             self.authers.add(auther)
+
+    def __get_auther_name(self, auther: URIRef) -> str:
+        if not self.parsed:
+            self.parse()
+        return str(self.graph.value(auther, FOAF.name))
 
     def get_authers(self) -> Set[Researcher]:
         if not hasattr(self, "authers"):
