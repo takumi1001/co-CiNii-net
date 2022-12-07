@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "co-cinii-net"
+version = "0.1.0"
+description = "Generate co-author networks from CiNii metadata based on RDF."
+authors = ["Takumi TAMURA <tamutamuphone@gmail.com>"]
+readme = "README.md"
+packages = [{include = "co_cinii_net"}]
+
+[tool.poetry.dependencies]
+python = ">=3.8.1,<4.0"
+rdflib = "^6.2.0"
+networkx = "^2.8.8"
+
+
+[tool.poetry.group.dev.dependencies]
+flake8 = "^6.0.0"
+autopep8 = "^2.0.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
