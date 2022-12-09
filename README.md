@@ -31,5 +31,5 @@ net.write_graphml("result.graphml")
  - `wait_seconds`でCiNiiに対してGETリクエストを送る間隔を指定します。
  - `is_nayose`で名寄せ（表記ゆれの吸収）を有効にします。
    - 形態素解析でヘボン式ローマ字に変換し、小文字化、記号除去を行った後ソートした文字列を、研究者の識別情報にします。
-   - `False`の場合はRDFに規則に則りURIを識別情報にします。
+   - `False`の場合はRDFの思想に則りURIを識別情報にします。
  - `max_requests`でGETリクエストを送信する総数を指定します。 
