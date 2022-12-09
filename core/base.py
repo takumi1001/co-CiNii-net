@@ -27,7 +27,7 @@ class Researcher:
         return self.name
 
     def __eq__(self, other) -> bool:
-        return self.resource == other.resource
+        return hash(self) == hash(other)
 
     def __hash__(self) -> int:
         return hash(self.resource)
@@ -75,8 +75,8 @@ class Work:
     def __str__(self) -> str:
         return str(self.resource)
 
-    def __eq__(self, other: "Work") -> bool:
-        return self.resource == other.resource
+    def __eq__(self, other) -> bool:
+        return hash(self) == hash(other)
 
     def __hash__(self) -> int:
         return hash(self.resource)
