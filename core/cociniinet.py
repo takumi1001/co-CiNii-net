@@ -31,9 +31,11 @@ class CoCiNiiNet:
     def generate(self, max_reqests: int = 100) -> None:
         self.visited_works : Set[Work] = set()
         self.__reqests_count = 0
+        self.new_nodes : List[Researcher] = [self.first_node,]
         self.__pbar = tqdm(total=max_reqests)
         try:
-            self.__generate(self.first_node, max_reqests=max_reqests)
+            for new_node in self.new_nodes:
+                self.__generate(new_node, max_reqests=max_reqests)
         except MaxReqestsSentException:
             pass
         finally:
@@ -48,8 +50,6 @@ class CoCiNiiNet:
             self.__pbar.update(1)
             time.sleep(self.wait_seconds)
 
-        new_nodes: List[Researcher] = []
-
         count_request_and_wait()
         for work in node.get_works(): # GET request sent here
             if work in self.visited_works:
@@ -62,11 +62,8 @@ class CoCiNiiNet:
                     continue
                 if hash(auther) not in self.G.nodes:
                     self.add_node(auther)
-                    new_nodes.append(auther)
+                    self.new_nodes.append(auther)
                 self.add_edge(node, auther, work)
-        
-        for new_node in new_nodes:
-            self.__generate(new_node, max_reqests=max_reqests)
 
     def write_graphml(self, filename: str) -> None:
         nx.write_graphml(self.G, filename)
