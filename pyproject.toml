@@ -11,6 +11,7 @@ python = ">=3.8.1,<4.0"
 rdflib = "^6.2.0"
 networkx = "^2.8.8"
 tqdm = "^4.64.1"
+pykakasi = "^2.2.1"
 
 
 [tool.poetry.group.dev.dependencies]

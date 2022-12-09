@@ -3,7 +3,8 @@ import time
 from tqdm import tqdm
 import networkx as nx
 from rdflib import URIRef
-from base import Researcher, Work
+from core.base import Researcher, Work
+from core.nayose import NayosedResearcher
 
 from typing import List, Set
 
@@ -12,8 +13,11 @@ class MaxReqestsSentException(Exception):
 
 class CoCiNiiNet:
 
-    def __init__(self, uri: str, name: str, wait_seconds :int = 1) -> None:
-        self.first_node = Researcher(URIRef(uri), name)
+    def __init__(self, uri: str, name: str, wait_seconds :int = 1, is_nayose = True) -> None:
+        if is_nayose:
+            self.first_node = NayosedResearcher(URIRef(uri), name)
+        else:
+            self.first_node = Researcher(URIRef(uri), name)
         self.G = nx.Graph()
         self.add_node(self.first_node)
         self.wait_seconds = wait_seconds
