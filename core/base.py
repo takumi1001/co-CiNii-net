@@ -27,7 +27,7 @@ class Researcher:
         return self.name
 
     def __eq__(self, other) -> bool:
-        return self.resource == other.resource
+        return hash(self) == hash(other)
 
     def __hash__(self) -> int:
         return hash(self.resource)
@@ -46,8 +46,11 @@ class Researcher:
         self.works :Set[Work] = set()
         for worktype in self.WORKTYPES:
             for s, p, t in self.graph.triples((None, None, worktype)):
-                work = Work(s, t) 
+                work = self.create_work(s, t)
                 self.works.add(work)
+
+    def create_work(self, source: URIRef, rdftype: URIRef) -> "Work":
+        return Work(source, rdftype)
 
     def get_works(self) -> Set["Work"]:
         if not hasattr(self, "works"):
@@ -75,8 +78,8 @@ class Work:
     def __str__(self) -> str:
         return str(self.resource)
 
-    def __eq__(self, other: "Work") -> bool:
-        return self.resource == other.resource
+    def __eq__(self, other) -> bool:
+        return hash(self) == hash(other)
 
     def __hash__(self) -> int:
         return hash(self.resource)
@@ -107,8 +110,11 @@ class Work:
             self.parse()
         self.authers: Set[Researcher] = set()
         for s, p, t in self.graph.triples((None, None, self.NS_CINII.Researcher)):
-            auther = Researcher(s, self.__get_auther_name(s))
+            auther = self. create_researcher(s, self.__get_auther_name(s))
             self.authers.add(auther)
+
+    def create_researcher(self, source: URIRef, name :str) -> Researcher:
+        return Researcher(source, name)
 
     def __get_auther_name(self, auther: URIRef) -> str:
         if not self.parsed:
