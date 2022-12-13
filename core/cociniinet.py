@@ -8,9 +8,6 @@ from core.nayose import NayosedResearcher
 
 from typing import List, Set
 
-class MaxReqestsSentException(Exception):
-    pass
-
 class CoCiNiiNet:
 
     def __init__(self, uri: str, name: str, wait_seconds :int = 1, is_nayose = True) -> None:
@@ -28,41 +25,31 @@ class CoCiNiiNet:
     def add_edge(self, node1: Researcher, node2: Researcher, work: Work) -> None:
         self.G.add_edge(hash(node1), hash(node2), label=work.get_title(), resource=work.getURI())
 
-    def generate(self, max_reqests: int = 100) -> None:
+    def generate(self) -> None:
         self.visited_works : Set[Work] = set()
-        self.__reqests_count = 0
-        self.new_nodes : List[Researcher] = [self.first_node,]
-        self.__pbar = tqdm(total=max_reqests)
-        try:
-            for new_node in self.new_nodes:
-                self.__generate(new_node, max_reqests=max_reqests)
-        except MaxReqestsSentException:
-            pass
-        finally:
-            self.__pbar.close()
+        self.new_nodes : List[Researcher] = []
 
-    def __generate(self, node: Researcher, max_reqests: int = 100) -> bool:
+        self.__generate(self.first_node, is_update_new_nodes=True, desc="[EGO]")
+        for i, new_node in enumerate(self.new_nodes):
+            desc = f"[{i+1}/{len(self.new_nodes)}]" 
+            self.__generate(new_node, is_update_new_nodes=False, desc=desc)
 
-        def count_request_and_wait() -> None:
-            if self.__reqests_count >= max_reqests:
-                raise MaxReqestsSentException
-            self.__reqests_count += 1
-            self.__pbar.update(1)
-            time.sleep(self.wait_seconds)
-
-        count_request_and_wait()
-        for work in node.get_works(): # GET request sent here
+    def __generate(self, node: Researcher, is_update_new_nodes :bool, desc :str) -> bool:
+        time.sleep(self.wait_seconds)
+        for work in tqdm(node.get_works(), desc=desc): # GET request sent here
             if work in self.visited_works:
                 continue
             else:
                 self.visited_works.add(work)
-            count_request_and_wait()
+
+            time.sleep(self.wait_seconds)
             for auther in work.get_authers(): # GET request sent here
                 if auther == node:
                     continue
                 if hash(auther) not in self.G.nodes:
                     self.add_node(auther)
-                    self.new_nodes.append(auther)
+                    if is_update_new_nodes:
+                        self.new_nodes.append(auther)
                 self.add_edge(node, auther, work)
 
     def write_graphml(self, filename: str) -> None:
