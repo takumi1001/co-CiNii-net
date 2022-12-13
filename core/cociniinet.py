@@ -34,7 +34,7 @@ class CoCiNiiNet:
             desc = f"[{i+1}/{len(self.new_nodes)}]" 
             self.__generate(new_node, is_update_new_nodes=False, desc=desc)
 
-    def __generate(self, node: Researcher, is_update_new_nodes :bool, desc :str) -> bool:
+    def __generate(self, node: Researcher, is_update_new_nodes :bool, desc :str) -> None:
         time.sleep(self.wait_seconds)
         for work in tqdm(node.get_works(), desc=desc): # GET request sent here
             if work in self.visited_works:
