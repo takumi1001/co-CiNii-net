@@ -1,6 +1,9 @@
 # co-CiNii-net
 Generate co-author networks from CiNii metadata based on RDF.
 
+ - 情報メディア実験Bの担当教員である津川先生の共著 Ego Network（一部・加工後）
+![image](https://user-images.githubusercontent.com/40143183/207401164-f86d4d75-d8a1-49d8-86a3-df1feaa36847.png)
+
 # About
 CiNiiのRDFデータを利用し、任意の研究者を始点とする（Ego Networkである）共著ネットワークを生成します。
 
