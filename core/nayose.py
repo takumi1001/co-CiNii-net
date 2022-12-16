@@ -24,10 +24,20 @@ class NayosedResearcher(Researcher):
         self.__kks = pykakasi.kakasi()
         self.__pat = re.compile(r"[^a-z]")
 
+    def __eq__(self, other) -> bool:
+        if not isinstance(other, NayosedResearcher):
+            return False
+        return hash(self) == hash(other)
+
     def __hash__(self) -> int:
         if not self.__nayose_string:
             self.__set_nayose_string()
         return hash(self.__nayose_string)
+
+    def get_node_id(self) -> str:
+        if not self.__nayose_string:
+            self.__set_nayose_string()
+        return self.__nayose_string
 
     def __set_nayose_string(self) -> None:
         result = self.__kks.convert(self.name)
