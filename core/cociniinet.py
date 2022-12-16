@@ -20,10 +20,10 @@ class CoCiNiiNet:
         self.wait_seconds = wait_seconds
 
     def add_node(self, node: Researcher) -> None:
-        self.G.add_node(hash(node), label=node.name, resource=node.getURI())
+        self.G.add_node(node.get_node_id(), label=node.name, resource=node.getURI())
 
     def add_edge(self, node1: Researcher, node2: Researcher, work: Work) -> None:
-        self.G.add_edge(hash(node1), hash(node2), label=work.get_title(), resource=work.getURI())
+        self.G.add_edge(node1.get_node_id(), node2.get_node_id(), label=work.get_title(), resource=work.getURI())
 
     def generate(self) -> None:
         self.visited_works : Set[Work] = set()
