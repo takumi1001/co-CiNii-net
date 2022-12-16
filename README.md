@@ -45,7 +45,7 @@ net.write_graphml("result.graphml")
 `wait_seconds`にもよりますが、生成にかなり時間がかかります。
 
 ## グラフの合成
-異なる研究者の共著エゴネットワークを合成できます。
+異なる研究者の共著Ego Networkを合成できます。
 （`is_nayose`の値が一致している必要がある。）
 
 ```python
