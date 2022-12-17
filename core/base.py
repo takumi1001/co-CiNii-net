@@ -27,10 +27,15 @@ class Researcher:
         return self.name
 
     def __eq__(self, other) -> bool:
+        if not isinstance(other, Researcher):
+            return False
         return hash(self) == hash(other)
 
     def __hash__(self) -> int:
         return hash(self.resource)
+
+    def get_node_id(self) -> str:
+        return self.getURI()
 
     def getURI(self) -> str:
         return str(self.resource)
