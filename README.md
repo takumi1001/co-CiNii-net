@@ -2,7 +2,7 @@
 Generate co-author networks from CiNii metadata based on RDF.
 
  - 情報メディア実験Bの担当教員である津川先生の共著 Ego Network（一部・加工後）
-![image](https://user-images.githubusercontent.com/40143183/207401164-f86d4d75-d8a1-49d8-86a3-df1feaa36847.png)
+![image](https://user-images.githubusercontent.com/40143183/208823654-9a6357a9-5468-4911-80cb-d948adf2e048.png)
 
 # About
 CiNiiのRDFデータを利用し、任意の研究者を始点とする（Ego Networkである）共著ネットワークを生成します。
@@ -56,3 +56,14 @@ c : nx.Graph = nx.compose(g, h)           # hの属性値はgの属性値より�
 nx.write_graphml(c, "fusion_comp_lab.graphml")
 ```
 
+## クラスタリング
+Louvainアルゴリズムでクラスタリングを行い、ノードの属性値にクラスタ番号をセットします。
+この属性を用いて、Gephiなどでノードの色分けができます。
+```python
+# グラフのクラスタリング
+import networkx as nx
+from utils.graph import louvain_clustering
+g = nx.read_graphml("tsugawa.graphml")       # https://cir.nii.ac.jp/crid/1420001326209796096
+louvain_clustering(g)                        # クラスタリング（gのノード属性値が変更される）
+nx.write_graphml(g, "tsugawa_clustered.graphml")
+```
