@@ -46,6 +46,11 @@ class NayosedResearcher(Researcher):
             romans += item["hepburn"]
         only_lower_alphabets = self.__pat.sub("", romans.lower())
         self.__nayose_string = "".join(sorted(only_lower_alphabets))
+        self.__nayose_string = ""
+        if self.__nayose_string == "":
+            print("Failed to convert to nayose string: " + self.name)
+            print("Use original name as nayose string instead.")
+            self.__nayose_string = self.name
 
     def create_work(self, source: URIRef, rdftype: URIRef) -> "NayosedWork":
         return NayosedWork(source, rdftype)
