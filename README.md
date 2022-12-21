@@ -60,7 +60,6 @@ nx.write_graphml(c, "fusion_comp_lab.graphml")
 Louvainアルゴリズムでクラスタリングを行い、ノードの属性値にクラスタ番号をセットします。
 この属性を用いて、Gephiなどでノードの色分けができます。
 ```python
-# グラフのクラスタリング
 import networkx as nx
 from utils.graph import louvain_clustering
 g = nx.read_graphml("tsugawa.graphml")       # https://cir.nii.ac.jp/crid/1420001326209796096
