@@ -46,7 +46,7 @@ class CoCiNiiNet:
             for auther in work.get_authers(): # GET request sent here
                 if auther == node:
                     continue
-                if hash(auther) not in self.G.nodes:
+                if auther.get_node_id() not in self.G.nodes:
                     self.add_node(auther)
                     if is_update_new_nodes:
                         self.new_nodes.append(auther)

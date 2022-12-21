@@ -35,7 +35,7 @@ class Researcher:
         return hash(self.resource)
 
     def get_node_id(self) -> str:
-        return str(self.resource)
+        return self.getURI()
 
     def getURI(self) -> str:
         return str(self.resource)

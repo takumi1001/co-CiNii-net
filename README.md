@@ -43,3 +43,16 @@ net.write_graphml("result.graphml")
    - `False`の場合はRDFの思想に則りURIを識別情報にします。
 
 `wait_seconds`にもよりますが、生成にかなり時間がかかります。
+
+## グラフの合成
+異なる研究者の共著Ego Networkを合成できます。
+（`is_nayose`の値が一致している必要がある。）
+
+```python
+import networkx as nx
+g = nx.read_graphml("ito.graphml")        # https://cir.nii.ac.jp/crid/1420003854341602816
+h = nx.read_graphml("morishima.graphml")  # https://cir.nii.ac.jp/crid/1420845751153905536
+c : nx.Graph = nx.compose(g, h)           # hの属性値はgの属性値よりも優先される
+nx.write_graphml(c, "fusion_comp_lab.graphml")
+```
+
