@@ -12,7 +12,7 @@ SVGやPNGで出力できます。
 ## Usage
 ### 環境構築
 #### バイナリのダウンロード
-1. Releaseより`visualizer.jar`をダウンロードし、適当なフォルダに配置します（準備中）。
+1. [Release](https://github.com/takumi1001/co-CiNii-net/releases)より`visualizer.jar`をダウンロードし、適当なフォルダに配置します。
 2. `visualizer.jar`の位置するフォルダ下に`libs`フォルダを作成します。
 3. [Gephi ToolKit](https://gephi.org/toolkit/)をダウンロードします。
 4. Gephi Toolkitのjarファイルを`gephi-toolkit.jar`としてリネームし、`libs`下に保存してください。
