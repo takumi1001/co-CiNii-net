@@ -253,17 +253,4 @@ $RECYCLE.BIN/
 hs_err_pid*
 replay_pid*
 
-### Kotlin ###
-# Compiled class file
-
-# Log file
-
-# BlueJ files
-
-# Mobile Tools for Java (J2ME)
-
-# Package Files #
-
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-
 # End of https://www.toptal.com/developers/gitignore/api/python,windows,macos
