@@ -1,3 +1,4 @@
 Manifest-Version: 1.0
 Main-Class: MainKt
 Class-Path: ./libs/gephi-toolkit.jar
+Add-Opens: java.base/java.net
