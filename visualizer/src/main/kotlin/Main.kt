@@ -110,9 +110,9 @@ fun hideOneDegreeNodes(graphModel :GraphModel) {
 
 fun previewGraph(fontName :String) {
     val model = Lookup.getDefault().lookup(PreviewController::class.java).model
-    model.properties.putValue(PreviewProperty.SHOW_NODE_LABELS,true);
+    model.properties.putValue(PreviewProperty.SHOW_NODE_LABELS,true)
     val font = Font(fontName, Font.PLAIN, 8)
     model.properties.putValue(
         PreviewProperty.NODE_LABEL_FONT,
-        font);
+        font)
 }
