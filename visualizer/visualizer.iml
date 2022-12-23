@@ -11,7 +11,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="KotlinJavaRuntime" level="project" />
-    <orderEntry type="library" name="gephi.toolkit" level="project" />
-    <orderEntry type="library" name="googlecode.sarasvati.thirdparty.netbeans.openide.util.lookup" level="project" />
+    <orderEntry type="library" name="gephi-toolkit" level="project" />
   </component>
 </module>
