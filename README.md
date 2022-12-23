@@ -66,3 +66,8 @@ g = nx.read_graphml("tsugawa.graphml")       # https://cir.nii.ac.jp/crid/142000
 louvain_clustering(g)                        # クラスタリング（gのノード属性値が変更される）
 nx.write_graphml(g, "tsugawa_clustered.graphml")
 ```
+
+## 可視化
+`visualizer.jar`を用いて可視化ができます。
+
+詳しくは、[こちら](https://github.com/takumi1001/co-CiNii-net/tree/visualize-kotlin/visualizer)。
