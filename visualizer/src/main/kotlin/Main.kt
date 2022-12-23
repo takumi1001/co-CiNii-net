@@ -1,4 +1,5 @@
 
+import EDU.oswego.cs.dl.util.concurrent.ClockDaemon.cancel
 import org.gephi.appearance.api.AppearanceController
 import org.gephi.appearance.plugin.RankingNodeSizeTransformer
 import org.gephi.filters.api.FilterController
@@ -13,6 +14,10 @@ import org.gephi.io.importer.api.Container
 import org.gephi.io.importer.api.EdgeDirectionDefault
 import org.gephi.io.importer.api.ImportController
 import org.gephi.io.processor.plugin.DefaultProcessor
+import org.gephi.layout.plugin.noverlap.NoverlapLayout
+import org.gephi.layout.plugin.noverlap.NoverlapLayoutBuilder
+import org.gephi.layout.plugin.openord.OpenOrdLayout
+import org.gephi.layout.plugin.openord.OpenOrdLayoutBuilder
 import org.gephi.preview.api.PreviewController
 import org.gephi.preview.api.PreviewProperty
 import org.gephi.project.api.ProjectController
@@ -38,12 +43,14 @@ fun main(args: Array<String>) {
         AppearanceController::class.java
     )
 
+    layoutByOpenOrd(graphModel)
     rankSizeByDegree(graphModel, appearanceController)
     hideOneDegreeNodes(graphModel)
+    layoutByNoverlap(graphModel)
 
     //Gephi Toolkitのバグにより、PDFにすると日本語が出力できない・・・。
     previewGraph("メイリオ")
-    exportFile("output.svg")
+    exportFile("output.png")
 }
 
 fun initAndLoadGraph(inputPath :String) {
@@ -115,4 +122,27 @@ fun previewGraph(fontName :String) {
     model.properties.putValue(
         PreviewProperty.NODE_LABEL_FONT,
         font)
+}
+
+fun layoutByOpenOrd(graphModel: GraphModel) {
+    val layout = OpenOrdLayout(OpenOrdLayoutBuilder())
+    layout.setGraphModel(graphModel)
+    layout.resetPropertiesValues()
+    layout.initAlgo()
+    for(i in 1..layout.numIterations) {
+        layout.goAlgo()
+        if (!layout.canAlgo()) break
+    }
+    layout.endAlgo()
+}
+
+fun layoutByNoverlap(graphModel: GraphModel) {
+    val layout = NoverlapLayout(NoverlapLayoutBuilder())
+    layout.setGraphModel(graphModel)
+    layout.resetPropertiesValues()
+    layout.initAlgo()
+    while (layout.canAlgo()) {
+        layout.goAlgo()
+    }
+    layout.endAlgo()
 }
