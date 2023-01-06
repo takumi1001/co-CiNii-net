@@ -46,7 +46,6 @@ class NayosedResearcher(Researcher):
             romans += item["hepburn"]
         only_lower_alphabets = self.__pat.sub("", romans.lower())
         self.__nayose_string = "".join(sorted(only_lower_alphabets))
-        self.__nayose_string = ""
         if self.__nayose_string == "":
             # 中国人の方などは変換に失敗することがあるので、その場合は元の名前を使う
             # idが空だとGephiでエラーになる
