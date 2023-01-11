@@ -36,21 +36,29 @@ class CoCiNiiNet:
 
     def __generate(self, node: Researcher, is_update_new_nodes :bool, desc :str) -> None:
         time.sleep(self.wait_seconds)
-        for work in tqdm(node.get_works(), desc=desc): # GET request sent here
-            if work in self.visited_works:
-                continue
-            else:
-                self.visited_works.add(work)
-
-            time.sleep(self.wait_seconds)
-            for auther in work.get_authers(): # GET request sent here
-                if auther == node:
+        try:
+            for work in tqdm(node.get_works(), desc=desc): # GET request sent here
+                if work in self.visited_works:
                     continue
-                if auther.get_node_id() not in self.G.nodes:
-                    self.add_node(auther)
-                    if is_update_new_nodes:
-                        self.new_nodes.append(auther)
-                self.add_edge(node, auther, work)
+                else:
+                    self.visited_works.add(work)
+
+                time.sleep(self.wait_seconds)
+                try:
+                    for auther in work.get_authers(): # GET request sent here
+                        if auther == node:
+                            continue
+                        if auther.get_node_id() not in self.G.nodes:
+                            self.add_node(auther)
+                            if is_update_new_nodes:
+                                self.new_nodes.append(auther)
+                        self.add_edge(node, auther, work)
+                except Exception as e:
+                    print(e)
+                    print(f"Work {work.getURI()} is skipped.")
+        except Exception as e:
+            print(e)
+            print(f"Researcher {node.getURI()} is skipped.")
 
     def write_graphml(self, filename: str) -> None:
         nx.write_graphml(self.G, filename)
