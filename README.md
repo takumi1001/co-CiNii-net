@@ -13,9 +13,9 @@ CiNiiのRDFデータを利用し、任意の研究者を始点とする（Ego Ne
 このようなメタデータを利用します。
 
 このプログラムは、筑波大学情報学群情報メディア創成学類が開講している「情報メディア実験B」の
-テーマ「M28: ソーシャルネットワーク分析（担当教員：津川翔先生）」において田村が開発したものです。
+テーマ「[M28: ソーシャルネットワーク分析](http://www.mibel.cs.tsukuba.ac.jp/~s-tugawa/jikken/)（担当教員：津川翔先生）」において田村が開発したものです。
 
-実験の成果発表会のスライドは[こちら](https://github.com/takumi1001/co-CiNii-net/releases/download/v0.8/slides.pdf)にあります。
+成果発表会のスライドを[こちら](https://github.com/takumi1001/co-CiNii-net/releases/download/v0.8/slides.pdf)でご覧になれます。
 
 # Usage
 ## 環境構築
